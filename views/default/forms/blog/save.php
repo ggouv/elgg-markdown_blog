@@ -71,15 +71,19 @@ if ($vars['guid']) {
 	$saved = elgg_echo('blog:never');
 }
 
+$params = array(
+	'draft' => elgg_echo('blog:status:draft'),
+	'published' => elgg_echo('blog:status:published')
+);
+if (!elgg_get_page_owner_entity()->canEdit()) {
+	unset($params['published']);
+}
 $status_label = elgg_echo('blog:status');
 $status_input = elgg_view('input/dropdown', array(
 	'name' => 'status',
 	'id' => 'blog_status',
 	'value' => $vars['status'],
-	'options_values' => array(
-		'draft' => elgg_echo('blog:status:draft'),
-		'published' => elgg_echo('blog:status:published')
-	)
+	'options_values' => $params
 ));
 
 $comments_label = elgg_echo('comments');
